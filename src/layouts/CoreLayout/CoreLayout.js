@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import Search from './../../components/Search/Search'
 import '../../styles/core.scss'
 
 // Note: Stateless/function components *will not* hot reload!
@@ -13,6 +14,20 @@ import '../../styles/core.scss'
 function CoreLayout ({ children }) {
   return (
     <div className='page-container'>
+      <div className='left-container'>
+        <div>
+          <h1>Title</h1>
+        </div>
+        <div>
+          <Search/>
+        </div>
+        <div>
+          <ul className='left-links'>
+            <li><a href='#'>Discover</a></li>
+            <li><a href='#'>My Favorites</a></li>
+          </ul>
+        </div>
+      </div>
       <div className='view-container'>
         {children}
       </div>

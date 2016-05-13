@@ -1,10 +1,8 @@
 /* @flow */
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { increment, doubleAsync } from '../../redux/modules/counter'
-import Counter from './../../components/Counter/Counter'
-import DuckImage from './Duck.jpg'
-import classes from './HomeView.scss'
+import Podcast from './../../components/Podcast/Podcast'
+import Search from './../../components/Search/Search'
 
 // We can use Flow (http://flowtype.org/) to type our component's props
 // and state. For convenience we've included both regular propTypes and
@@ -14,9 +12,7 @@ import classes from './HomeView.scss'
 // code, or `npm i -g flow-bin` to have access to the binary globally.
 // Sorry Windows users :(.
 type Props = {
-  counter: number,
-  doubleAsync: Function,
-  increment: Function
+  podcasts: Array,
 };
 
 // We avoid using the `@connect` decorator on the class definition so
@@ -24,43 +20,24 @@ type Props = {
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 export class HomeView extends React.Component<void, Props, void> {
   static propTypes = {
-    counter: PropTypes.number.isRequired,
-    doubleAsync: PropTypes.func.isRequired,
-    increment: PropTypes.func.isRequired
+    podcasts: PropTypes.array.isRequired
   };
-
+  podcasts = this.props.podcasts.map((podcast) =>
+    <Podcast {...podcast} />
+  );
   render () {
     return (
-      <div className='container text-center'>
-        <div className='row'>
-          <div className='col-xs-2 col-xs-offset-5'>
-            <img className={classes.duck}
-              src={DuckImage}
-              alt='This is a duck, because Redux.' />
-          </div>
+      <div>
+        <div className='container text-center'>
+          {this.podcasts}
         </div>
-        <h1>Welcome to the React Redux Starter Kit</h1>
-        <h2>
-          Sample Counter:
-          {' '}
-          <Counter { ...this.props } classes={classes} />
-        </h2>
-        <button className='btn btn-default' onClick={this.props.increment}>
-          Increment
-        </button>
-        {' '}
-        <button className='btn btn-default' onClick={this.props.doubleAsync}>
-          Double (Async)
-        </button>
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  counter: state.counter
+  podcasts: state.podcasts
 })
 export default connect((mapStateToProps), {
-  increment: () => increment(1),
-  doubleAsync
 })(HomeView)
